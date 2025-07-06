@@ -1,0 +1,68 @@
+name: Test Katas
+
+on:
+  push:
+    branches:
+      - main
+
+permissions:
+  contents: write
+
+jobs:
+  PreTestLint:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Linting Test
+        working-directory: katas
+        run: |
+          pip install pylint
+          pylint *.py || true
+
+  PreTestListKatas:
+    runs-on: ubuntu-latest
+    outputs:
+      tests: ${{ steps.kata_tests.outputs.tests }}
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+      - name: List Katas to test
+        id: kata_tests
+        working-directory: katas/test
+        run: |  
+          kata_json=$(ls test_*.py | sed 's/^test_//' | jq -R -s -c 'split("\n")[:-1]')
+          echo "Katas: $kata_json"
+          echo "tests=$kata_json" >> $GITHUB_OUTPUT
+
+  Test:
+    needs: PreTestListKatas
+    runs-on: ubuntu-latest
+    name: ${{ matrix.kata_name }}
+    strategy:
+      fail-fast: false
+      matrix:
+        kata_name: ${{ fromJson(needs.PreTestListKatas.outputs.tests) }}
+    steps:
+      - uses: actions/checkout@v4
+      - name: unittest run
+        run: |
+          export PYTHONPATH=$PYTHONPATH:$(pwd)/katas
+          filename=${{ matrix.kata_name }}
+          python -m unittest katas.test.test_${filename%.py}
+
+  PostTestStoreTestId:
+    needs: Test
+    runs-on: ubuntu-latest
+    if: always()
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+      - run: |
+          git config --local user.email "python@katas"
+          git config --local user.name "auto-test"
+          git checkout -b internal/test || git checkout internal/test
+          echo ${GITHUB_RUN_ID} > .test_results_id
+          git add .test_results_id && git commit -m "update run id"
+          git push origin internal/test --force
