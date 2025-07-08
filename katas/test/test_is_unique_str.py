@@ -1,4 +1,5 @@
 import unittest
+<<<<<<< HEAD
 from katas.is_unique_str import is_unique  # Replace with your module name or just import if in same file
 
 class TestIsUnique(unittest.TestCase):
@@ -23,3 +24,21 @@ class TestIsUnique(unittest.TestCase):
 
 if __name__ == '__main__':
     unittest.main()
+=======
+from katas.is_unique_str import is_unique
+
+
+class TestIsUnique(unittest.TestCase):
+    def test_empty_str(self):
+        self.assertEqual(is_unique(''), True)
+
+    def test_unique(self):
+        self.assertEqual(is_unique('word'), True)
+
+    def test_not_unique(self):
+        self.assertEqual(is_unique('aaa'), False)
+
+    def test_unique_case_insensitivity(self):
+        self.assertEqual(is_unique('Aa'), True)
+
+>>>>>>> 8ba878a992da4a9765868416a660e5da0f9fe598
