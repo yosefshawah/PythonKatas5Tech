@@ -8,10 +8,10 @@ def find_difference(numbers):
     Returns:
         the difference between the largest and smallest numbers
     """
-    return 0
+    if not isinstance(numbers, list):
+        raise TypeError("Expected a list")
+    
+    if len(numbers) == 0:
+        raise ValueError("Invalid value, expected at least 2 numbers")
 
-
-if __name__ == '__main__':
-    sample_list = [10, 3, 5, 6, 20, -2]
-    difference = find_difference(sample_list)
-    print(difference)  # 22 should be printed
+    return max(numbers) - min(numbers)
