@@ -1,5 +1,8 @@
 import unittest
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> f868093 (test for n_times and is_unique)
 from katas.is_unique_str import is_unique  # Replace with your module name or just import if in same file
 
 class TestIsUnique(unittest.TestCase):
@@ -24,6 +27,7 @@ class TestIsUnique(unittest.TestCase):
 
 if __name__ == '__main__':
     unittest.main()
+<<<<<<< HEAD
 =======
 from katas.is_unique_str import is_unique
 
@@ -42,3 +46,5 @@ class TestIsUnique(unittest.TestCase):
         self.assertEqual(is_unique('Aa'), True)
 
 >>>>>>> 8ba878a992da4a9765868416a660e5da0f9fe598
+=======
+>>>>>>> f868093 (test for n_times and is_unique)
