@@ -1,9 +1,13 @@
 import unittest
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 >>>>>>> f868093 (test for n_times and is_unique)
 from katas.is_unique_str import is_unique  # Replace with your module name or just import if in same file
+=======
+from katas.is_unique_str import is_unique  
+>>>>>>> cc18854 (word count sol)
 
 class TestIsUnique(unittest.TestCase):
     def test_repeated_chars(self):
