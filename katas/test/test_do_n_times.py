@@ -1,6 +1,6 @@
 import unittest
 from unittest.mock import Mock
-from katas.do_n_times import do_n_times  # Replace with the actual module name
+from katas.do_n_times import do_n_times  
 
 class TestDoNTimes(unittest.TestCase):
     def test_do_n_times_called_exact_number(self):

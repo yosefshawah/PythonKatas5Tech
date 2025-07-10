@@ -1,5 +1,5 @@
 import unittest
-from katas.is_unique_str import is_unique  # Replace with your module name or just import if in same file
+from katas.is_unique_str import is_unique  
 
 class TestIsUnique(unittest.TestCase):
     def test_repeated_chars(self):
