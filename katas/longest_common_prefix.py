@@ -8,7 +8,27 @@ def longest_common_prefix(strs):
     Returns:
         the longest common prefix, or an empty string if none exists
     """
-    return ""
+    def starts_with(word, prefix):
+        if len(prefix) > len(word):
+            return False
+        for i in range(len(prefix)):
+            if word[i] != prefix[i]:
+                return False
+        return True
+
+    
+    if not strs:
+        return ""
+
+    prefix = strs[0]
+
+    for word in strs[1:]:
+        while not starts_with(word, prefix):
+            prefix = prefix[:-1]  # chop one character at a time
+            if not prefix:
+                return ""
+
+    return prefix
 
 
 if __name__ == '__main__':
