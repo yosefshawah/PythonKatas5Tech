@@ -25,8 +25,22 @@ def extract_user_data(api_response: str) -> List[Dict[str, str]]:
     Raises:
         ValueError: if the JSON is invalid
     """
-    return []
-
+    # result should ne of this format: [{id: "1",... }, {},]
+    
+    data = json.loads(api_response)
+    res = []
+    for user in data.get("users", []):
+        company = user.get("company") or {}
+        address = user.get("address") or {}
+        
+        res.append({
+            "id": user.get("id") or "Unknown",
+            "name": user.get("name") or "Unknown" ,
+            "email": user.get("email") or "Unknown",
+            "company_name": company.get("name") or "Unknown",
+            "city": address.get("city") or "Unknown"
+        })  
+    return res
 
 if __name__ == "__main__":
     sample_response = '''
