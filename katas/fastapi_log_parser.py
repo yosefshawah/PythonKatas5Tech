@@ -27,7 +27,40 @@ def parse_fastapi_log(log_line: str):
     Returns:
         Dictionary with parsed log components, or empty dict if invalid format
     """
-    return {}
+    
+    """
+    
+    INFO:\s+                  # "INFO:" followed by spaces
+    (\d+\.\d+\.\d+\.\d+):     # Match IP address before colon
+    (\d+)                     # Match port number
+    \s+-\s+"                  # Dash and quote
+    ([A-Z]+)\s                # HTTP method (e.g., GET, POST)
+    (.*?)\s                   # Endpoint (non-greedy match until next space)
+    HTTP/(\d+\.\d+)"\s        # HTTP version
+    (\d+)\s                   # Status code
+    (.+)$                     # Status text (until end of line)
+
+    """
+    
+    # r'' means interpet the string as raw string and when met \ backslash dont treat it as escape 
+    pattern = r'INFO:\s+(\d+\.\d+\.\d+\.\d+):(\d+)\s+-\s+"([A-Z]+)\s(.*?)\sHTTP/(\d+\.\d+)"\s(\d+)\s(.+)$'
+    match = re.match(pattern, log_line)
+    
+    if not match:
+        return {}
+    
+    return {
+        "client_ip": match.group(1),
+        "client_port": match.group(2),
+        "http_method": match.group(3),
+        "endpoint": match.group(4),
+        "http_version": match.group(5),
+        "status_code": match.group(6),
+        "status_text": match.group(7)
+    }
+    
+    
+    
 
 
 if __name__ == "__main__":
