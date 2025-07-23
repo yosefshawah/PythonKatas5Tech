@@ -9,7 +9,17 @@ def find_missing_number(numbers):
     Returns:
         the missing number
     """
-    return 0
+    # quick way to find out what number is missing is to sum up the numbers and return the difference
+    # of what would have been the hole sum if all the numbers were available
+    total = 0
+    curr = 0
+    for i in range(len(numbers) + 1):
+        total += i
+    for num in numbers:
+        curr += num
+    
+    
+    return total - curr
 
 
 if __name__ == '__main__':
