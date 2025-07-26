@@ -19,7 +19,6 @@ class TestIsAnagram(unittest.TestCase):
     def test_ignores_spaces(self):
         self.assertTrue(is_anagram("The Eyes", "They See"))
         self.assertTrue(is_anagram("Conversation", "Voices Rant On"))
-        self.assertFalse(is_anagram("Listen ", " Silent"))  # Spaces at ends still ignored
 
     def test_empty_strings(self):
         self.assertTrue(is_anagram("", ""))
