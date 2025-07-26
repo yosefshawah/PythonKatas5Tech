@@ -11,7 +11,17 @@ def is_anagram(s1, s2):
     Returns:
         True if the strings are anagrams, False otherwise
     """
-    return False
+    dict1 = {}
+    dict2 = {}
+    for c in s1:
+        dict1[c] = 1 + dict1.get(c, 0)
+    
+    for c in s2:
+        dict2[c] = 1 + dict2.get(c, 0)
+    
+    return dict1 == dict2
+    
+    
 
 
 if __name__ == '__main__':
