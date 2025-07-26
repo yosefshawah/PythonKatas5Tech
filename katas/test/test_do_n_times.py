@@ -1,14 +1,8 @@
 import unittest
 from unittest.mock import Mock
-<<<<<<< HEAD
-<<<<<<< HEAD
-from katas.do_n_times import do_n_times  
-=======
+
+
 from katas.do_n_times import do_n_times  # Replace with the actual module name
->>>>>>> f868093 (test for n_times and is_unique)
-=======
-from katas.do_n_times import do_n_times  
->>>>>>> cc18854 (word count sol)
 
 class TestDoNTimes(unittest.TestCase):
     def test_do_n_times_called_exact_number(self):
