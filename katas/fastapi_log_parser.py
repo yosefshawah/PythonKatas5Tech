@@ -43,7 +43,7 @@ def parse_fastapi_log(log_line: str):
     """
     
     # r'' means interpet the string as raw string and when met \ backslash dont treat it as escape 
-    pattern = r'INFO:\s+(\d+\.\d+\.\d+\.\d+):(\d+)\s+-\s+"([A-Z]+)\s(.*?)\sHTTP/(\d+\.\d+)"\s(\d+)\s(.+)$'
+    pattern = r'INFO:\s+(\d+\.\d+\.\d+\.\d+):(\d+)\s+-\s+"([A-Z]+)\s+(.*?)\s+HTTP/(\d+\.\d+)"\s+(\d+)\s+(.+)$'
     match = re.match(pattern, log_line)
     
     if not match:
