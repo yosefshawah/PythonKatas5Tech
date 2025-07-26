@@ -48,6 +48,9 @@ def parse_env_config(env_string: str):
         key, value = line.split("=", 1)
         key = key.strip()
         value = value.strip()
+        
+        if not key:
+            continue  # Skip lines with empty keys
 
         # Remove surrounding quotes if present
         if (value.startswith('"') and value.endswith('"')) or \
