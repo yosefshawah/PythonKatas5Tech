@@ -1,6 +1,6 @@
 import unittest
 
-from katas.two_sum import two_sum  # Replace with actual filename if needed
+from katas.two_sum import two_sum 
 
 class TestTwoSum(unittest.TestCase):
 
