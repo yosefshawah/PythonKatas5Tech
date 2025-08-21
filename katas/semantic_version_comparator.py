@@ -18,7 +18,24 @@ def compare_versions(version1, version2):
          0 if version1 = version2
          1 if version1 > version2
     """
+    # Split and convert to integers
+    parts1 = list(map(int, version1.split(".")))
+    parts2 = list(map(int, version2.split(".")))
+
+    # Pad shorter list with zeros
+    max_len = max(len(parts1), len(parts2))
+    parts1.extend([0] * (max_len - len(parts1)))
+    parts2.extend([0] * (max_len - len(parts2)))
+
+    # Compare component by component
+    for p1, p2 in zip(parts1, parts2):
+        if p1 < p2:
+            return -1
+        elif p1 > p2:
+            return 1
     return 0
+    
+    
 
 
 if __name__ == '__main__':
