@@ -27,7 +27,19 @@ class IP:
         Returns:
             True if valid, False otherwise.
         """
-        raise NotImplementedError("Validation logic not implemented.")
+        parts = address.split('.')
+        if len(parts) != 4:
+            return False
+        
+        for part in parts:
+            try:
+                num = int(part)
+                if num < 0 or num > 255: #each numnber should be between 0 and 255 thats how ipv4 works
+                    return False
+            except ValueError:
+                return False
+        
+        return True
 
     def __str__(self):
         return self.address
@@ -36,7 +48,7 @@ class IP:
         return isinstance(other, IP) and self.address == other.address
 
     def __hash__(self):
-        raise NotImplementedError("hashCode logic not implemented.")
+        return hash(self.address)
 
 
 class RoundRobinLoadBalancer:
@@ -51,7 +63,8 @@ class RoundRobinLoadBalancer:
         """
         Initializes the load balancer with an empty pool of servers.
         """
-        raise NotImplementedError("Constructor not implemented.")
+        self.servers = []
+        self.current_index = 0
 
     def add_server(self, server: IP):
         """
@@ -60,7 +73,8 @@ class RoundRobinLoadBalancer:
         Args:
             server: An IP instance representing the server to add.
         """
-        raise NotImplementedError("add_server not implemented.")
+        if server not in self.servers:
+            self.servers.append(server)
 
     def remove_server(self, server: IP):
         """
@@ -69,7 +83,11 @@ class RoundRobinLoadBalancer:
         Args:
             server: An IP instance representing the server to remove.
         """
-        raise NotImplementedError("remove_server not implemented.")
+        if server in self.servers:
+            self.servers.remove(server)
+            # Reset index if we removed a server before current position
+            if self.current_index >= len(self.servers) and self.servers:
+                self.current_index = 0
 
     def route_request(self) -> IP | None:
         """
@@ -78,7 +96,16 @@ class RoundRobinLoadBalancer:
         Returns:
             The IP instance of the server handling the request, or None if no servers are available.
         """
-        raise NotImplementedError("route_request not implemented.")
+        if not self.servers:
+            return None
+        
+        # Get current server
+        server = self.servers[self.current_index]
+        
+        # Move to next server for next request
+        self.current_index = (self.current_index + 1) % len(self.servers)
+        
+        return server
 
 
 if __name__ == '__main__':
