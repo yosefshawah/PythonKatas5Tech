@@ -25,7 +25,22 @@ def fetch_github_user(username: str) -> Optional[Dict]:
         #     'followers': 9999
         # }
     """
-    pass
+    try:
+        url = f"https://api.github.com/users/{username}"
+        response = requests.get(url)
+        
+        if response.status_code == 200:
+            data = response.json()
+            return {
+                'login': data.get('login'),
+                'name': data.get('name'),
+                'public_repos': data.get('public_repos'),
+                'followers': data.get('followers')
+            }
+        else:
+            return None
+    except Exception:
+        return None
 
 
 def get_user_repositories_count(username: str) -> int:
@@ -38,8 +53,10 @@ def get_user_repositories_count(username: str) -> int:
     Returns:
         Number of public repositories, or 0 if user not found/error
     """
-    # TODO: Implement this function using fetch_github_user
-    pass
+    user_info = fetch_github_user(username)
+    if user_info and user_info.get('public_repos') is not None:
+        return user_info['public_repos']
+    return 0
 
 
 if __name__ == '__main__':
