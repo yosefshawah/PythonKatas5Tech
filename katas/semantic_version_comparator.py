@@ -19,16 +19,16 @@ def compare_versions(version1, version2):
          1 if version1 > version2
     """
     # Split and convert to integers
-    parts1 = list(map(int, version1.split(".")))
+    parts1 = list(map(int, version1.split("."))) # map() is used to apply a function to each element of an iterable
     parts2 = list(map(int, version2.split(".")))
 
     # Pad shorter list with zeros
     max_len = max(len(parts1), len(parts2))
-    parts1.extend([0] * (max_len - len(parts1)))
+    parts1.extend([0] * (max_len - len(parts1))) # extend() is used to add elements to the end of a list
     parts2.extend([0] * (max_len - len(parts2)))
 
     # Compare component by component
-    for p1, p2 in zip(parts1, parts2):
+    for p1, p2 in zip(parts1, parts2): # zip() is used to iterate over two lists simultaneously
         if p1 < p2:
             return -1
         elif p1 > p2:
