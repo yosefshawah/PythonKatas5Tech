@@ -2,7 +2,8 @@ import subprocess
 import time
 
 # Note
-# 
+# The unittest for this kata *must mock* the ping to avoid actual network calls.
+
 
 
 def ping_host(hostname: str, count: int = 5):
