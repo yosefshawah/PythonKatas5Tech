@@ -20,10 +20,41 @@ def ping_host(hostname: str, count: int = 5):
         - 'avg_response_time_ms': average response time in milliseconds
         - 'success': True if any packets received
     """
-    # TODO: Use subprocess.run() to execute ping command
-    # Linux/Mac: ping -c {count} {hostname}
-    # Parse output to extract the average latency in milliseconds
-    pass
+    try:
+        # Run ping command and capture output
+        result = subprocess.run(
+            ['ping', '-c', str(count), hostname],
+            capture_output=True,
+            text=True,
+            check=False
+        )
+        
+        # Initialize response dictionary
+        response = {
+            'host': hostname,
+            'avg_response_time_ms': 0.0,
+            'success': False
+        }
+        
+        # Check if ping was successful
+        if result.returncode == 0:
+            # Extract average time from output
+            output_lines = result.stdout.split('\n')
+            for line in output_lines:
+                if 'avg' in line:
+                    # Format: round-trip min/avg/max/stddev = 10.123/15.456/20.789/2.345 ms
+                    stats = line.split('=')[1].strip().split('/')
+                    response['avg_response_time_ms'] = float(stats[1])
+                    response['success'] = True
+                    break
+        
+        return response
+    except Exception as e:
+        return {
+            'host': hostname,
+            'avg_response_time_ms': 0.0,
+            'success': False
+        }
 
 
 
