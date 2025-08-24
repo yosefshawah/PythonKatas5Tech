@@ -19,8 +19,20 @@ def get_cpu_usage():
         - 'core_count': Number of CPU cores
         - 'per_core_usage': List of per-core usage percentages
     """
-    # TODO: Use psutil to get CPU information, e.g. psutil.cpu_percent() for overall usage
-    pass
+    # Get overall CPU usage (with a small interval for accuracy)
+    overall_usage = psutil.cpu_percent(interval=0.1)
+    
+    # Get number of CPU cores
+    core_count = psutil.cpu_count()
+    
+    # Get per-core CPU usage
+    per_core = psutil.cpu_percent(interval=0.1, percpu=True)
+    
+    return {
+        'usage_percent': overall_usage,
+        'core_count': core_count,
+        'per_core_usage': per_core
+    }
 
 
 def get_memory_usage():
@@ -33,8 +45,17 @@ def get_memory_usage():
         - 'available_gb': Available memory in GB
         - 'used_gb': Used memory in GB
     """
-    # TODO: Use psutil.virtual_memory()
-    pass
+    # Get memory information
+    memory = psutil.virtual_memory()
+    
+    # Convert bytes to GB (1 GB = 1024^3 bytes)
+    gb_factor = 1024 ** 3
+    
+    return {
+        'total_gb': round(memory.total / gb_factor, 2),
+        'available_gb': round(memory.available / gb_factor, 2),
+        'used_gb': round((memory.total - memory.available) / gb_factor, 2)
+    }
 
 def get_disk_usage(path: str = "/") -> Dict:
     """
@@ -50,9 +71,18 @@ def get_disk_usage(path: str = "/") -> Dict:
         - 'free_gb': Free disk space in GB
         - 'usage_percent': Disk usage percentage
     """
-    # TODO: Use psutil.disk_usage(path)
+    # Get disk usage information
+    disk = psutil.disk_usage(path)
+    
     # Convert bytes to GB
-    pass
+    gb_factor = 1024 ** 3
+    
+    return {
+        'total_gb': round(disk.total / gb_factor, 2),
+        'used_gb': round(disk.used / gb_factor, 2),
+        'free_gb': round(disk.free / gb_factor, 2),
+        'usage_percent': disk.percent
+    }
 
 
 
